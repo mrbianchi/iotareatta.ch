@@ -96,14 +96,14 @@
           </div>
           <div class="switch col s3">
               <label>
-                <input type="checkbox" checked>
+                <input type="checkbox" id="reattachCheckbox" checked>
                 <span class="lever"></span>
                 Reattach
               </label>
           </div>
           <div class="switch col s3">
               <label>
-                <input type="checkbox" checked>
+                <input type="checkbox" id="promoteCheckbox" checked>
                 <span class="lever"></span>
                 Promote
               </label>
@@ -112,7 +112,7 @@
       </div>
       <div class="row"></div>
         <div class="col s12">
-          <button class="acceleratebtn btn waves-effect waves-light green" name="action" style="width:100%;" type="submit">Start</button>
+          <button class="start btn waves-effect waves-light green" name="action" style="width:100%;" type="submit">Start</button>
         </div>
       </div>
 
@@ -136,51 +136,7 @@
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
+  <script src="js/iota.js"></script>
   <script src="js/init.js"></script>
-  <script>
-  $('#customNodeCheckbox').change(function(){
-    $("#nodeListArea").toggle("slow");
-    $("#customNodeArea").toggle("slow");
-  })
-  $.getJSON( "/iota.dance.json", function( nodes ) {
-    window.withRemotePoWAvailable = nodes.filter(function(node){
-      return node.pow
-    })
-    var onlyLocalPoW = nodes.filter(function(node){
-      return !node.pow
-    })
-    if(window.withRemotePoWAvailable.length > 0) {
-      $("#nodeListArea select").append('<optgroup label="Remote PoW Available"></optgroup>')
-      window.withRemotePoWAvailable.forEach(function(node){
-        $("#nodeListArea select optgroup:eq(0)").append('<option value="'+node.node+'">'+node.node+'</option>')
-      })
-    }
-    if(onlyLocalPoW.length > 0) {
-      $("#nodeListArea select").append('<optgroup label="Only Local PoW"></optgroup>')
-      onlyLocalPoW.forEach(function(node){
-        $("#nodeListArea select optgroup:eq(1)").append('<option value="'+node.node+'">'+node.node+'</option>')
-      })
-    }
-    var elem = document.querySelector('select');
-    var instance = M.FormSelect.init(elem, {});
-
-    $('select').change(function(){
-      var nodeSelected = $(this).val();
-      var found = window.withRemotePoWAvailable.filter( function(node){
-        return (nodeSelected === node.node) ? true : false
-      })
-      if(found.length) {
-        $("#remotePoWCheckbox").removeAttr('disabled');
-        $("#remotePoWCheckbox").prop('checked',true);
-      } else {
-        $("#remotePoWCheckbox").prop('checked',false);
-        $("#remotePoWCheckbox").attr('disabled','disabled');
-      }
-    })
-
-
-  })
-  
-  </script>
   </body>
 </html>
