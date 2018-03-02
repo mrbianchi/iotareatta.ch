@@ -60,3 +60,12 @@ footer.page-footer {
 
 
 /* ReATTA.CH */
+.status {
+  text-align:right;
+}
+.status.confirmed {
+  color:green;
+}
+.status.unconfirmed {
+  color:red;
+}
