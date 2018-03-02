@@ -1,9 +1,75 @@
 window.reattach = {};
+window.reattach.logReset = function(){
+  $(".log").toggle("slow");
+  $(".log").html("");
+  $(".log").toggle("slow");
+};
+window.reattach.logAdd = function(msg){
+  $('.log').append('<p>'+msg+'</p>')
+};
+window.reattach.start = function(){
+  window.reattach.logReset()
+  window.reattach.connect()
+    .then(()=>{return window.reattach.getTransactionObjects(window.reattach.data.input,'bundles')})//assumed input is bundle, search txs
+    .then( (transactionObjects) => {
+      if(transactionObjects.length > 0)
+        return Promise.resolve(transactionObjects)//fine, we have the bundle
+      else {
+        return window.reattach.getBundleHashFromTransactionHash(window.reattach.data.input)//assumed input is transaction, search bundle hash
+          .then( (bundleHash) => {
+            if(bundleHash)
+              return window.reattach.getTransactionObjects(bundleHash,'bundles')//fine, we have bundle hash, search txs
+            else
+              return Promise.reject('address')//input isn't bundle hash, isn't tx hash, is address
+          })
+          .catch((error) => {
+            if(error==='address')
+              window.reattach.error('Invalid hash, you can find your transaction on <a target="_blank" href="https://thetangle.org/address/'+window.reattach.input+'">here</a>'+error)
+            else
+              window.reattach.error(error)
+          })
+      }
+    })
+    .then( (transactionObjects) => {
+          window.reattach.data.bundle = transactionObjects
+          window.reattach.logAdd('<h5>Bundle</h5> '+transactionObjects[0].bundle)
+          return window.reattach.getStatus(transactionObjects)
+    })
+    .then()
+    .catch((error) => {
+      if(error==='address')
+        window.reattach.error('Invalid hash, you can find your transaction on <a target="_blank" href="https://thetangle.org/address/'+window.reattach.input+'">here</a>'+error)
+      else
+        window.reattach.error(error)
+    })
+}
+
+window.reattach.doReattach = function(bundle) {
+
+}
+window.reattach.getStatus = function(bundle) {
+  var tails = bundle.filter((transactionObject)=>{
+    return !transactionObject.currentIndex
+  })
+  var hashes = bundle.map((transactionObject)=>{
+    return transactionObject.hash
+  })
+  return new Promise( (resolve,reject) => {
+    window.iota.api.getLatestInclusion(hashes,(error,states) => {
+      if(error) reject(error)
+      else
+        resolve(states.filter((state)=>{
+          return state
+        }))
+    })
+  })
+}
 
 window.reattach.connect = function(provider) {
   window.iota = new window.IOTA({
-    provider: provider
+    provider: window.reattach.data.provider
   })
+  return Promise.resolve(true)
 }
 
 window.reattach.collectOptions = function() {
@@ -16,36 +82,47 @@ window.reattach.collectOptions = function() {
 };
 
 window.reattach.getTransactionObjects = function (input,inputType) {
-  return new Promise( (resolveChild,rejectChild) => {
-    window.iota.api.findTransactionObjects({inputType:[input]}, (error,transactionObjects)=>{
+  return new Promise( (resolve,reject) => {
+    var search = {}
+    search[inputType] = [input]
+    window.iota.api.findTransactionObjects(search, (error,transactionObjects)=>{
     if(error) reject(error)
     else
-      if(transactionObjects.length>0)
-        return resolve(transactionObjects)
+      resolve(transactionObjects)
     })
   })
 };
 
-window.reattach.getBundleFromTransactionHash = function (input) {
+window.reattach.getBundleHashFromTransactionHash = function (input) {
   return new Promise( (resolve,reject) => {
     window.iota.api.getTransactionsObjects([input], (error,transactionObjects)=>{
       if(error) reject(error)
       else 
-        if(transactionObjects.length > 0) {
-          resolve(transactionObject[0].bundle)
-        }else{
+        if(transactionObjects.length > 0)
+          resolve(transactionObjects[0].bundle)
+        else
           resolve(false)
-        }
     })
   })
 };
 
-window.reattach.getBundleFromBundleHash = function (input){
-  return getTransactionObjects(input,'bundles')
+window.reattach.toggleInputDisables = function () {
+  if($('input').attr('disabled')){
+    $('input').removeAttr('disabled');
+    $('.start button').removeAttr('disabled');
+    $(".start").toggle("slow");
+    $(".stop").toggle("slow");
+  }else{
+    $(".start").toggle("slow");
+    $(".stop").toggle("slow");
+    $('.start button').attr('disabled','disabled');
+    $('input').attr('disabled','disabled');
+  }
 };
 
-window.reattach.toggleInputDisables = function () {
-  $('input').attr('disabled','disabled');
+window.reattach.error = function(msg){
+  window.reattach.logAdd(msg)
+  window.reattach.toggleInputDisables()
 };
 
 (function($){
@@ -102,6 +179,7 @@ window.reattach.toggleInputDisables = function () {
     $(".start").click(function(){
       window.reattach.collectOptions()
       window.reattach.toggleInputDisables()
+      window.reattach.start()
     })
 
   }); // end of document ready
