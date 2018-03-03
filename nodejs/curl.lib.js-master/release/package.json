@@ -1,6 +1,6 @@
 {
   "name": "curl.lib.js",
-  "version": "1.0.22",
+  "version": "1.0.20",
   "description": "WebGL2 Accelerated IOTA Proof of Work",
   "main": "src/curl.lib.js",
   "directories": {
@@ -8,11 +8,7 @@
     "lib": "lib"
   },
   "dependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.0",
-    "iota.crypto.js": "github:iotaledger/iota.crypto.js",
-    "loader-utils": "^1.1.0"
+    "iota.crypto.js": "iotaledger/iota.crypto.js"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -29,9 +25,10 @@
     "webpack-stream": "^4.0.0"
   },
   "scripts": {
+    "compile": "gulp --harmony",
+    "prepublish": "npm run compile",
     "test": "gulp --harmony test",
-    "dev": "webpack-dev-server",
-    "build": "webpack"
+    "dev": "webpack-dev-server"
   },
   "repository": {
     "type": "git",

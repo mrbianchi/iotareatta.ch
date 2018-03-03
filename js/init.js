@@ -16,6 +16,112 @@ String.prototype.toHHMMSS = function () {
   var time = /*hours + ':' + */minutes + ':' + seconds;
   return time;
 }
+window.curl.init()
+const MAX_TIMESTAMP_VALUE = (Math.pow(3,27) - 1) / 2 // from curl.min.js
+const localAttachToTangle = function(trunkTransaction, branchTransaction, minWeightMagnitude, trytes, callback) {
+  const ccurlHashing = function(trunkTransaction, branchTransaction, minWeightMagnitude, trytes, callback) {
+      const iotaObj = window.iota;
+
+      // inputValidator: Check if correct hash
+      if (!iotaObj.valid.isHash(trunkTransaction)) {
+          return callback(new Error("Invalid trunkTransaction"));
+      }
+
+      // inputValidator: Check if correct hash
+      if (!iotaObj.valid.isHash(branchTransaction)) {
+          return callback(new Error("Invalid branchTransaction"));
+      }
+
+      // inputValidator: Check if int
+      if (!iotaObj.valid.isValue(minWeightMagnitude)) {
+          return callback(new Error("Invalid minWeightMagnitude"));
+      }
+
+      var finalBundleTrytes = [];
+      var previousTxHash;
+      var i = 0;
+
+      function loopTrytes() {
+          getBundleTrytes(trytes[i], function(error) {
+              if (error) {
+                  return callback(error);
+              } else {
+                  i++;
+                  if (i < trytes.length) {
+                      loopTrytes();
+                  } else {
+                      // reverse the order so that it's ascending from currentIndex
+                      return callback(null, finalBundleTrytes.reverse());
+                  }
+              }
+          });
+      }
+
+      function getBundleTrytes(thisTrytes, callback) {
+          // PROCESS LOGIC:
+          // Start with last index transaction
+          // Assign it the trunk / branch which the user has supplied
+          // IF there is a bundle, chain  the bundle transactions via
+          // trunkTransaction together
+
+          var txObject = iotaObj.utils.transactionObject(thisTrytes);
+          txObject.tag = txObject.obsoleteTag;
+          txObject.attachmentTimestamp = Date.now();
+          txObject.attachmentTimestampLowerBound = 0;
+          txObject.attachmentTimestampUpperBound = MAX_TIMESTAMP_VALUE;
+          // If this is the first transaction, to be processed
+          // Make sure that it's the last in the bundle and then
+          // assign it the supplied trunk and branch transactions
+          if (!previousTxHash) {
+              // Check if last transaction in the bundle
+              if (txObject.lastIndex !== txObject.currentIndex) {
+                  return callback(new Error("Wrong bundle order. The bundle should be ordered in descending order from currentIndex"));
+              }
+
+              txObject.trunkTransaction = trunkTransaction;
+              txObject.branchTransaction = branchTransaction;
+          } else {
+              // Chain the bundle together via the trunkTransaction (previous tx in the bundle)
+              // Assign the supplied trunkTransaciton as branchTransaction
+              txObject.trunkTransaction = previousTxHash;
+              txObject.branchTransaction = trunkTransaction;
+          }
+
+          var newTrytes = iotaObj.utils.transactionTrytes(txObject);
+
+          curl.pow({trytes: newTrytes, minWeight: minWeightMagnitude}).then(function(nonce) {
+              var returnedTrytes = newTrytes.substr(0, 2673-81).concat(nonce);
+              var newTxObject= iotaObj.utils.transactionObject(returnedTrytes);
+
+              // Assign the previousTxHash to this tx
+              var txHash = newTxObject.hash;
+              previousTxHash = txHash;
+
+              finalBundleTrytes.push(returnedTrytes);
+              callback(null);
+          }).catch(callback);
+      }
+      loopTrytes()
+  }
+
+  ccurlHashing(trunkTransaction, branchTransaction, minWeightMagnitude, trytes, function(error, success) {
+      if (error) {
+          console.log(error);
+      } else {
+          console.log(success);
+      }
+      if (callback) {
+          return callback(error, success);
+      } else {
+          return success;
+      }
+  })
+}
+
+
+
+
+
 window.reattach = {};
 window.reattach.timers = new Array()
 window.reattach.timer = function(index) {
@@ -48,6 +154,18 @@ window.reattach.logReset = function(){
 window.reattach.logAdd = function(msg){
   $('.log').append('<p>'+msg+'</p>')
 };
+window.reattach.checker = function(){
+  window.reattach.getStatus(window.reattach.data.tailObjects)
+    .then( (status) => {
+      if(status.length) {
+        $(".status").addClass('confirmed')
+        $(".status").text('Confirmed')
+      } else {
+        $(".status").html('Pending - '+window.reattach.createCountdown(window.reattach.checker,30))
+      }
+    })
+    .catch((error)=>{window.reattach.logAdd('Error while checking status: '+error)})
+}
 window.reattach.start = function(){
   window.reattach.logReset()
   window.reattach.connect()
@@ -99,17 +217,18 @@ window.reattach.start = function(){
     })
     .then( (status) => {
       if(status.length) {
+        window.reattach.data.status = true
         window.reattach.logAdd('<h6 class="status confirmed">Confirmed</h6>')
         return Promise.reject('confirmed')
       } else {
-        window.reattach.logAdd('<h6 class="status unconfirmed">Unconfirmed - '+window.reattach.createCountdown(function(){alert('hola')},60)+'</h6><hr>')
-        
+        window.reattach.data.status = false
+        window.reattach.logAdd('<h6 class="status unconfirmed">Pending - '+window.reattach.createCountdown(window.reattach.checker,30)+'</h6><hr>')
         return window.reattach.doReattach()
       }
     })
     .then( (success) => {
       if(success) {
-        window.reattach.logAdd('<h6>Reattached</h6> <a target="_blank" href="https://thetangle.org/transaction/'+success[0].hash+'">'+success[0].hash+'</a>')
+        window.reattach.logAdd('<h6>Reattached - '+window.reattach.createCountdown(window.reattach.reattachAgain,60)+'</h6> <a target="_blank" href="https://thetangle.org/transaction/'+success[0].hash+'">'+success[0].hash+'</a>')
         window.reattach.data.tailObjects.push(success[0])
         return window.reattach.doPromote(success[0].hash)
       }else{
@@ -118,9 +237,9 @@ window.reattach.start = function(){
     })
     .then( (success) => {
       if(success) {
-        window.reattach.logAdd('')
+        //window.reattach.logAdd('')
       }else{
-        window.reattach.logAdd('Verifying on..2')
+        //window.reattach.logAdd('Verifying on..2')
       }
     })
     .catch((error) => {
@@ -141,7 +260,7 @@ window.reattach.start = function(){
     })
 }
 
-window.reattach.doReattach = function(bundle) {
+window.reattach.doReattach = function() {
   if(window.reattach.data.reattach === false)
     return Promise.resolve(false)
   else
@@ -152,32 +271,83 @@ window.reattach.doReattach = function(bundle) {
       })
     })
 }
+window.reattach.reattachAgain = function() {
+    if(window.reattach.data.status)
+      return;
+    var reattach = new Promise( (resolve,reject) => {
+      window.iota.api.replayBundle(window.reattach.data.tailObjects[0].hash, 3, 14, (error,success) => {
+        if(error) reject(error)
+        else resolve(success)
+      })
+    })
+    reattach
+      .then( (success) => {
+        window.reattach.logAdd('<h6>Reattached - '+window.reattach.createCountdown(window.reattach.reattachAgain,600)+'</h6> <a target="_blank" href="https://thetangle.org/transaction/'+success[0].hash+'">'+success[0].hash+'</a>')
+        window.reattach.data.tailObjects.push(success[0])
+        window.reattach.doPromote(success[0].hash)
+          .then(console.log)
+          .catch((error)=>{window.reattach.logAdd('Error while promoting: '+error)})
+      })
+      .catch((error)=>{window.reattach.logAdd('Error while reattaching: '+error)})
+}
 
 window.reattach.doPromote = function(tailHash) {
   if(!window.reattach.data.promote)
     return Promise.resolve(false)
   if(typeof tailHash === 'undefined')
-    var tailHash = window.reattach.data.input()
+    var tailHash = window.reattach.data.input
   return new Promise( (resolve,reject) => {
     var count = 0
     window.reattach.data.promoteID = Math.round(+new Date()/1000) + new Date().getTime()
-    window.reattach.logAdd('<h6>Promoted <span id="counter-'+window.reattach.data.promoteID+'">0</span>/'+(window.reattach.data.tailObjects[0].lastIndex+1)+'</h6>')
-    window.iota.api.promoteTransaction(tailHash, 3, 14, [{
-      address: 'REATTACH9DOT9ONLINE99999999999999999999999999999999999999999999999999999999999MRB',
-      tag: 'REATTACHDOTONLINE',
-      message: window.iota.utils.toTrytes('http://IOTAReatta.ch - IOTA Reattacher/Promoter'),
-      value: 0
-    }],{
-      delay:1000,
-      interrupt: () => {
-          $('#counter-'+window.reattach.data.promoteID).text(++count)
-          return count >= (window.reattach.data.tailObjects[0].lastIndex+1);
-      }
-    }, (error,result) => {
-      if(error) reject(error)
-      else resolve(true)
-    })
+    window.reattach.logAdd('<h6>Promoted <span id="counter-'+window.reattach.data.promoteID+'">0</span>/'+(window.reattach.data.tailObjects[0].lastIndex+1)+(window.reattach.data.reattach ? '' : (' - '+window.reattach.createCountdown(window.reattach.promoteAgain,180)))+'</h6>')
+    setTimeout(function(){
+      window.iota.api.promoteTransaction(tailHash, 3, 14, [{
+        address: 'REATTACH9DOT9ONLINE99999999999999999999999999999999999999999999999999999999999MRB',
+        tag: 'REATTACHDOTONLINE',
+        message: window.iota.utils.toTrytes('http://IOTAReatta.ch - IOTA Reattacher/Promoter'),
+        value: 0
+      }],{
+        delay:1000,
+        interrupt: () => {
+            $('#counter-'+window.reattach.data.promoteID).text(++count)
+            return count >= (window.reattach.data.tailObjects[0].lastIndex+1);
+        }
+      }, (error,result) => {
+        if(error) reject(error)
+        else resolve(true)
+      })
+    }, 3000);
   })
+}
+window.reattach.promoteAgain = function(){
+  if(window.reattach.data.status)
+    return;
+  if(window.reattach.data.reattach)
+    var tailHash = window.reattach.data.tailObjects.slice(-1).pop().hash
+  else
+    var tailHash = window.reattach.data.input
+    var promote = new Promise( (resolve,reject) => {
+      var count = 0
+      window.reattach.data.promoteID = Math.round(+new Date()/1000) + new Date().getTime()
+      window.reattach.logAdd('<h6>Promoted <span id="counter-'+window.reattach.data.promoteID+'">0</span>/'+(window.reattach.data.tailObjects[0].lastIndex+1)+' - '+window.reattach.createCountdown(window.reattach.promoteAgain,180)+'</h6>')
+      setTimeout(function(){
+        window.iota.api.promoteTransaction(tailHash, 3, 14, [{
+          address: 'REATTACH9DOT9ONLINE99999999999999999999999999999999999999999999999999999999999MRB',
+          tag: 'REATTACHDOTONLINE',
+          message: window.iota.utils.toTrytes('http://IOTAReatta.ch - IOTA Reattacher/Promoter'),
+          value: 0
+        }],{
+          delay:1000,
+          interrupt: () => {
+              $('#counter-'+window.reattach.data.promoteID).text(++count)
+              return count >= (window.reattach.data.tailObjects[0].lastIndex+1);
+          }
+        }, (error,result) => {
+          if(error) reject(error)
+          else resolve(true)
+        })
+      }, 3000);
+    })
 }
 
 window.reattach.getStatus = function(bundle) {
@@ -202,6 +372,7 @@ window.reattach.connect = function(provider) {
   window.iota = new window.IOTA({
     provider: window.reattach.data.provider
   })
+  window.iota.api.attachToTangle = localAttachToTangle
   return Promise.resolve(true)
 }
 

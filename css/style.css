@@ -63,9 +63,9 @@ footer.page-footer {
 .status {
   text-align:right;
 }
+.status.unconfirmed {
+  color:grey;
+}
 .status.confirmed {
   color:green;
-}
-.status.unconfirmed {
-  color:red;
 }
