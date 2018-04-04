@@ -17,8 +17,8 @@ String.prototype.toHHMMSS = function () {
   return time;
 }
 window.curl.init()
-const MAX_TIMESTAMP_VALUE = (Math.pow(3,27) - 1) / 2 // from curl.min.js
-const localAttachToTangle = function(trunkTransaction, branchTransaction, minWeightMagnitude, trytes, callback) {
+window.reattach = {};
+window.reattach.localAttachToTangle = function(trunkTransaction, branchTransaction, minWeightMagnitude, trytes, callback) {
   const ccurlHashing = function(trunkTransaction, branchTransaction, minWeightMagnitude, trytes, callback) {
       const iotaObj = window.iota;
 
@@ -68,7 +68,7 @@ const localAttachToTangle = function(trunkTransaction, branchTransaction, minWei
           txObject.tag = txObject.obsoleteTag;
           txObject.attachmentTimestamp = Date.now();
           txObject.attachmentTimestampLowerBound = 0;
-          txObject.attachmentTimestampUpperBound = MAX_TIMESTAMP_VALUE;
+          txObject.attachmentTimestampUpperBound = (Math.pow(3,27) - 1) / 2;
           // If this is the first transaction, to be processed
           // Make sure that it's the last in the bundle and then
           // assign it the supplied trunk and branch transactions
@@ -117,12 +117,6 @@ const localAttachToTangle = function(trunkTransaction, branchTransaction, minWei
       }
   })
 }
-
-
-
-
-
-window.reattach = {};
 window.reattach.timers = new Array()
 window.reattach.timer = function(index) {
   if(typeof window.reattach.timers[index] === 'undefined') return;
@@ -372,7 +366,8 @@ window.reattach.connect = function(provider) {
   window.iota = new window.IOTA({
     provider: window.reattach.data.provider
   })
-  window.iota.api.attachToTangle = localAttachToTangle
+  if(window.reattach.data.remotePoW === false)
+    window.iota.api.attachToTangle = window.reattach.localAttachToTangle
   return Promise.resolve(true)
 }
 
@@ -424,6 +419,11 @@ window.reattach.error = function(msg){
   if(typeof msg !== 'undefined')
     window.reattach.logAdd(msg)
   window.reattach.toggleInputDisables()
+  window.reattach.timers.forEach( (timer) => {
+    clearInterval(timer.interval)
+  })
+  window.iota.api.interruptAttachingToTangle()
+  throw new Error("Something went badly wrong!");
 };
 
 (function($){
@@ -482,6 +482,8 @@ window.reattach.error = function(msg){
       window.reattach.toggleInputDisables()
       window.reattach.start()
     })
-
+    $(".stop").click(function(){
+      window.reattach.error('Stopped')
+    })
   }); // end of document ready
 })(jQuery); // end of jQuery name space
