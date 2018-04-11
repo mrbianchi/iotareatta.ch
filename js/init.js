@@ -1,3 +1,11 @@
+// Suffler
+function shuffle(a) {
+  for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 // Timer
 String.prototype.toHHMMSS = function () {
   var sec_num = parseInt(this, 10); // don't forget the second parm
@@ -166,6 +174,7 @@ window.reattach.checker = function(){
       if(status.length) {
         $(".status").addClass('confirmed')
         $(".status").text('Confirmed')
+        window.reattach.error('Confirmed')
       } else {
         $(".status").html('Pending - '+window.reattach.createCountdown(window.reattach.checker,30))
       }
@@ -234,7 +243,7 @@ window.reattach.start = function(){
     })
     .then( (success) => {
       if(success) {
-        window.reattach.logAdd('<h6>Reattached - '+window.reattach.createCountdown(window.reattach.reattachAgain,60)+'</h6> <a target="_blank" href="https://thetangle.org/transaction/'+success[0].hash+'">'+success[0].hash+'</a>')
+        window.reattach.logAdd('<h6>Reattached - '+window.reattach.createCountdown(window.reattach.reattachAgain,600)+'</h6> <a target="_blank" href="https://thetangle.org/transaction/'+success[0].hash+'">'+success[0].hash+'</a>')
         window.reattach.data.tailObjects.push(success[0])
         return window.reattach.doPromote(success[0].hash)
       }else{
@@ -452,6 +461,7 @@ window.reattach.error = function(msg){
 
     // Get nodes from json and append to select
     $.getJSON( "/nodeList.json", function( nodes ) {
+      nodes = shuffle(nodes);
       window.withRemotePoWAvailable = nodes.filter(function(node){
         return node.pow
       })
@@ -505,7 +515,8 @@ window.reattach.error = function(msg){
       window.reattach.start()
     })
     $(".stop").click(function(){
-      window.reattach.error('Stopped')
+      location.reload();
     })
+    $('body').toggleClass('loaded');
   }); // end of document ready
 })(jQuery); // end of jQuery name space
