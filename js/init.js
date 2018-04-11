@@ -459,9 +459,18 @@ window.reattach.error = function(msg){
       $("#customNodeArea").toggle("slow");
     })
 
+    // https contrl
+    if(window.location.protocol === 'https:')
+      $("body").prepend('<div style="background-color:yellow;text-align:center;">You are connected with https: protocol, only https: nodes are avaibles. Click <a href="http://www.reattach.online">here</a> to connect with http: protocol.</div>');
     // Get nodes from json and append to select
     $.getJSON( "/nodeList.json", function( nodes ) {
       nodes = shuffle(nodes);
+
+      if(window.location.protocol === 'https:')
+        nodes = nodes.filter(function(node){
+          return node.node.split(':')[0] === 'https'
+        })
+
       window.withRemotePoWAvailable = nodes.filter(function(node){
         return node.pow
       })
@@ -471,7 +480,7 @@ window.reattach.error = function(msg){
       var fromWallet = nodes.filter(function(node){
         return node.wallet
       })
-      console.log(fromWallet)
+      
       if(window.withRemotePoWAvailable.length > 0) {
         $("#nodeListArea select").append('<optgroup label="Remote PoW Available (node list from iota.dance)"></optgroup>')
         window.withRemotePoWAvailable.forEach(function(node){
