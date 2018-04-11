@@ -1,3 +1,4 @@
+// Timer
 String.prototype.toHHMMSS = function () {
   var sec_num = parseInt(this, 10); // don't forget the second parm
   var hours = Math.floor(sec_num / 3600);
@@ -16,8 +17,14 @@ String.prototype.toHHMMSS = function () {
   var time = /*hours + ':' + */minutes + ':' + seconds;
   return time;
 }
+
+// Init curl (Local PoW)
 window.curl.init()
+
+// Init site vars
 window.reattach = {};
+
+// Local Attach To Tangle
 window.reattach.localAttachToTangle = function(trunkTransaction, branchTransaction, minWeightMagnitude, trytes, callback) {
   const ccurlHashing = function(trunkTransaction, branchTransaction, minWeightMagnitude, trytes, callback) {
       const iotaObj = window.iota;
@@ -117,7 +124,11 @@ window.reattach.localAttachToTangle = function(trunkTransaction, branchTransacti
       }
   })
 }
+
+// Array of timers
 window.reattach.timers = new Array()
+
+// Timer function
 window.reattach.timer = function(index) {
   if(typeof window.reattach.timers[index] === 'undefined') return;
   var temp = window.reattach.timers[index].count.toHHMMSS();
@@ -129,6 +140,7 @@ window.reattach.timer = function(index) {
   }
 }
 
+// Create countdown
 window.reattach.createCountdown = function(callback,seconds) {
   window.reattach.timers.push({
     selector: 'timer-'+Math.round(+new Date()/1000) + new Date().getTime(),
@@ -139,7 +151,7 @@ window.reattach.createCountdown = function(callback,seconds) {
   return '<span id="'+window.reattach.timers.slice(-1).pop().selector+'"></span>'
 }
 
-
+// Reset logs
 window.reattach.logReset = function(){
   $(".log").toggle("slow");
   $(".log").html("");
@@ -298,7 +310,7 @@ window.reattach.doPromote = function(tailHash) {
       window.iota.api.promoteTransaction(tailHash, 3, 14, [{
         address: 'REATTACH9DOT9ONLINE99999999999999999999999999999999999999999999999999999999999MRB',
         tag: 'REATTACHDOTONLINE',
-        message: window.iota.utils.toTrytes('http://IOTAReatta.ch - IOTA Reattacher/Promoter'),
+        message: window.iota.utils.toTrytes('http://www.ReATTACH.online - IOTA Reattacher/Promoter'),
         value: 0
       }],{
         delay:1000,
@@ -328,7 +340,7 @@ window.reattach.promoteAgain = function(){
         window.iota.api.promoteTransaction(tailHash, 3, 14, [{
           address: 'REATTACH9DOT9ONLINE99999999999999999999999999999999999999999999999999999999999MRB',
           tag: 'REATTACHDOTONLINE',
-          message: window.iota.utils.toTrytes('http://IOTAReatta.ch - IOTA Reattacher/Promoter'),
+          message: window.iota.utils.toTrytes('http://www.ReATTACH.online - IOTA Reattacher/Promoter'),
           value: 0
         }],{
           delay:1000,
@@ -439,30 +451,40 @@ window.reattach.error = function(msg){
     })
 
     // Get nodes from json and append to select
-    $.getJSON( "/iota.dance.json", function( nodes ) {
+    $.getJSON( "/nodeList.json", function( nodes ) {
       window.withRemotePoWAvailable = nodes.filter(function(node){
         return node.pow
       })
       var onlyLocalPoW = nodes.filter(function(node){
-        return !node.pow
+        return !node.pow && !node.wallet
       })
+      var fromWallet = nodes.filter(function(node){
+        return node.wallet
+      })
+      console.log(fromWallet)
       if(window.withRemotePoWAvailable.length > 0) {
-        $("#nodeListArea select").append('<optgroup label="Remote PoW Available"></optgroup>')
+        $("#nodeListArea select").append('<optgroup label="Remote PoW Available (node list from iota.dance)"></optgroup>')
         window.withRemotePoWAvailable.forEach(function(node){
-          $("#nodeListArea select optgroup:eq(0)").append('<option value="'+node.node+'">'+node.node+'</option>')
+          $("#nodeListArea select optgroup:eq(0)").append('<option value="'+node.node+':'+node.port+'">'+node.node+':'+node.port+'</option>')
         })
       }
       if(onlyLocalPoW.length > 0) {
-        $("#nodeListArea select").append('<optgroup label="Only Local PoW"></optgroup>')
+        $("#nodeListArea select").append('<optgroup label="Only Local PoW (node list from iota.dance)"></optgroup>')
         onlyLocalPoW.forEach(function(node){
-          $("#nodeListArea select optgroup:eq(1)").append('<option value="'+node.node+'">'+node.node+'</option>')
+            $("#nodeListArea select optgroup:eq(1)").append('<option value="'+node.node+':'+node.port+'">'+node.node+':'+node.port+'</option>')
         })
       }
+      $("#nodeListArea select").append('<optgroup label="Only Local PoW (node list from Official Wallet)"></optgroup>')
+      fromWallet.forEach(function(node){
+          $("#nodeListArea select optgroup:eq(2)").append('<option value="'+node.node+':'+node.port+'">'+node.node+':'+node.port+'</option>')
+      })
       var elem = document.querySelector('select');
       var instance = M.FormSelect.init(elem, {});
   
       $('select').change(function(){
         var nodeSelected = $(this).val();
+        nodeSelected = nodeSelected.split(':')[0]+':'+nodeSelected.split(':')[1];
+        console.log(nodeSelected);
         var found = window.withRemotePoWAvailable.filter( function(node){
           return (nodeSelected === node.node) ? true : false
         })
