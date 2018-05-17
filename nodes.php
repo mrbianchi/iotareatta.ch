@@ -1,4 +1,6 @@
 <?php
+    // Cronjob this file to get nodeList.json up to date.
+    // This file exists because can't get jsons from external sources via JS because security headers
     $sources = array("https://iotasupport.com/providers.json","https://static.iota.org/providers.json");
     $nodeList = array();
     foreach($sources as $source) {
