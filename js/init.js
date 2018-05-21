@@ -482,13 +482,13 @@ window.reattach.error = function(msg){
       })
       
       if(window.withRemotePoWAvailable.length > 0) {
-        $("#nodeListArea select").append('<optgroup label="Remote PoW Available (node list from iota.dance)"></optgroup>')
+        $("#nodeListArea select").append('<optgroup label="Remote PoW Available"></optgroup>')
         window.withRemotePoWAvailable.forEach(function(node){
           $("#nodeListArea select optgroup:eq(0)").append('<option value="'+node.node+':'+node.port+'">'+node.node+':'+node.port+'</option>')
         })
       }
       if(onlyLocalPoW.length > 0) {
-        $("#nodeListArea select").append('<optgroup label="Only Local PoW (node list from iota.dance)"></optgroup>')
+        $("#nodeListArea select").append('<optgroup label="Only Local PoW"></optgroup>')
         onlyLocalPoW.forEach(function(node){
             $("#nodeListArea select optgroup:eq(1)").append('<option value="'+node.node+':'+node.port+'">'+node.node+':'+node.port+'</option>')
         })
