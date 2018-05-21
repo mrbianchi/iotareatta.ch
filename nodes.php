@@ -24,17 +24,30 @@
         array_push($newNodeList,$nodeInfo);
     }
 
+    // custom
+    $fieldCarriotaNode = (object) [
+        "node" => "https://field.carriota.com",
+        "port" => "443",
+        "pow" => true,
+        "wallet" => false
+    ];
+    array_push($newNodeList,$fieldCarriotaNode);
+
     // iota.dance/data/node-stats
-    $nodeList2 = array();
     $result = @file_get_contents("https://iota.dance/data/node-stats");
     if($result) {
         $nodes = JSON_DECODE($result);
+        $nodesDedup = array();
         foreach($nodes as $nodeInfo) {
+            $band = false;
+            foreach($nodes as $nodeInfo2) {
+                if($nodeInfo2->node === $nodeInfo->node)
+                    $band = true;
+            }
             $nodeInfo->wallet = false;
-            if($nodeInfo->health !== 1)
+            if($nodeInfo->health !== 1 && !$band)
                 array_push($newNodeList,$nodeInfo);
         }
         $newNodeList = JSON_ENCODE($newNodeList,JSON_UNESCAPED_SLASHES);
-        print_r($newNodeList);
         file_put_contents('nodeList.json',$newNodeList);
     }
