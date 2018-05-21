@@ -1,145 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>IOTA Promoter/Reattacher - IOTAReatta.ch</title>
-  <meta content="og.jpg" property="og:image"/>
-  <meta content="Speed up your iota transaction promoting/reattaching it automatically!" name="description"/>
-  <!-- ICONS -->
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-</head>
-<body>
-  <!-- LOADER -->
-  <div id="loader-wrapper"><div id="loader"></div><div class="loader-section section-left"></div><div class="loader-section section-right"></div></div>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108604914-3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag(){dataLayer.push(arguments)}
+      gtag('js', new Date())
 
-  <nav class="white" role="navigation">
-    <div class="nav-wrapper container">
-      <a id="logo-container" href="#" class="brand-logo">IOTAReatta.ch</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="https://t.me/joinchat/GBna_xI-xUonyU1RGtspYw" target="_blank">Join us on Telegram</a></li>
-      </ul>
+      gtag('config', 'UA-108604914-3')
+    </script>
 
-      <ul id="nav-mobile" class="sidenav">
-        <li><a href="https://t.me/joinchat/GBna_xI-xUonyU1RGtspYw" target="_blank">Join us on Telegram</a></li>
-      </ul>
-      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-    </div>
-  </nav>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-5014469443290772",
+        enable_page_level_ads: true
+      });
+    </script>
 
-  <div id="index-banner" class="parallax-container valign-wrapper">
-    <div class="section no-pad-bot">
-      <div class="container">
-        <br><br>
-        <h4 class="header center teal-text text-lighten-2">Speed up your transaction</h4>
-        <div class="row center">
-          <h5 class="header col s12 light">Automatically reattach & promote</h5>
-        </div>
-      </div>
-    </div>
-    <div class="parallax"><img src="background1.jpg" alt="Unsplashed background img 1"></div>
-  </div>
+    <title>Open IOTA</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="icon" type="image/png" sizes="32x32" href="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/favicon-16x16.png">
+    <!--[if IE]><link rel="shortcut icon" href="/static/img/icons/favicon.ico"><![endif]-->
+    <!-- Add to home screen for Android and modern mobile browsers -->
+    <link rel="manifest" href="<%= htmlWebpackPlugin.files.publicPath %>static/manifest.json">
+    <meta name="theme-color" content="#4DBA87">
 
-  <div class="container">
-    <div class="section">
-      <div class="row">
-        <div class="col s12 center">
-          <div class="input-field col l12 s12">
-            <input class="validate" id="hash" name="hash" pattern="[A-Z9]+" required="required" type="text">
-            <label for="hash" class="">Enter Bundle or Transaction Hash</label>
-          </div>
-        </div>
-        <div class="col s12 center">
-          <div id="nodeListArea" class="input-field col s12">
-            <select>
-            </select>
-            <label>Node List</label>
-          </div>
-        </div>
-        <div class="col s12 center">
-          <div id="customNodeArea" class="input-field col l12 s12" style="display:none;">
-              <input class="validate" id="customNodeInput" name="customNodeInput" type="text">
-              <label for="customNodeInput" class="">protocol://host:port</label>
-            </div>
-        </div>
-        <div class="col s12 center">
-          <div class="switch col s3">
-              <label>
-                <input type="checkbox" id="customNodeCheckbox">
-                <span class="lever"></span>
-                Custom Node
-              </label>
-          </div>
-          <div class="switch col s3">
-              <label>
-                <input type="checkbox" id="remotePoWCheckbox">
-                <span class="lever"></span>
-                Remote PoW
-              </label>
-          </div>
-          <div class="switch col s3">
-              <label>
-                <input type="checkbox" id="reattachCheckbox" checked>
-                <span class="lever"></span>
-                Reattach
-              </label>
-          </div>
-          <div class="switch col s3">
-              <label>
-                <input type="checkbox" id="promoteCheckbox" checked>
-                <span class="lever"></span>
-                Promote
-              </label>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col s12 start">
-          <br>
-          <button class="btn waves-effect waves-light green" name="action" style="width:100%;" type="submit"><strong>Start</strong></button>
-        </div>
-        <div class="col s12 stop" style="display:none;">
-            <button class="btn waves-effect waves-light red" name="action" style="width:100%;" type="submit">Stop</button>
-          </div>
-      </div>
-      <div class="row">
-          <div class="col s12 log">
+    <!-- Add to home screen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="open-iota">
+    <link rel="apple-touch-icon" href="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/apple-touch-icon-152x152.png">
+    <!-- Add to home screen for Windows -->
+    <meta name="msapplication-TileImage" content="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/msapplication-icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#000000">
+    <% for (var chunk of webpack.chunks) {
+        for (var file of chunk.files) {
+          if (file.match(/\.(js|css)$/)) { %>
+    <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>"><% }}} %>
 
-          </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="parallax-container valign-wrapper">
-    <div class="section no-pad-bot">
-      <div class="container">
-        <div class="row center">
-          <h5 class="header col s12 light">IOTAReatta.ch</h5>
-          <p>Suggestions? Questions? Help?<br/><a href="https://t.me/joinchat/GBna_xI-xUonyU1RGtspYw" target="_blank">Join us on Telegram</a></p>
-          <br><a href="https://github.com/mrbianchi/iotareatta.ch" target="_blank">Github Repository</a></p>
-        </div>
-      </div>
-    </div>
-    <div class="parallax"><img src="background3.jpg" alt="Unsplashed background img 3"></div>
-  </div>
-
-
-  <!--  Scripts -->
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
-  <script src="js/iota.lib.js"></script>
-  <script id="worker" src="js/iota.curl.lib.js"></script>
-  <script src="js/init.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  </head>
+  <body>
+    <noscript>
+      This is your fallback content in case JavaScript fails to load.
+    </noscript>
+    <div id="app"></div>
+    <!-- Todo: only include in production -->
+    <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
+    <!-- built files will be auto injected -->
   </body>
 </html>
