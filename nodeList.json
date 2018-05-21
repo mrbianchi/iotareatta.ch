@@ -1,1 +1,445 @@
-[{"node":"https://nodes.iota.cafe","port":"443","pow":false,"wallet":true},{"node":"http://iotanode.farm","port":"14265","pow":false,"wallet":true},{"node":"http://cryptoiota.win","port":"14265","pow":false,"wallet":true},{"node":"http://eugene.iota.community","port":"14265","pow":false,"wallet":true},{"node":"http://eugene.iotasupport.com","port":"14999","pow":false,"wallet":true},{"node":"http://eugeneoldisoft.iotasupport.com","port":"14265","pow":false,"wallet":true},{"node":"http://node01.iotatoken.nl","port":"14265","pow":false,"wallet":true},{"node":"http://node02.iotatoken.nl","port":"14265","pow":false,"wallet":true},{"node":"http://node03.iotatoken.nl","port":"15265","pow":false,"wallet":true},{"node":"http://mainnet.necropaz.com","port":"14500","pow":false,"wallet":true},{"node":"http://wallets.iotamexico.com","port":"80","pow":false,"wallet":true},{"node":"http://5.9.137.199","port":"14265","pow":false,"wallet":true},{"node":"http://5.9.118.112","port":"14265","pow":false,"wallet":true},{"node":"http://5.9.149.169","port":"14265","pow":false,"wallet":true},{"node":"http://88.198.230.98","port":"14265","pow":false,"wallet":true},{"node":"http://176.9.3.149","port":"14265","pow":false,"wallet":true},{"node":"https://n1.iota.nu","port":"443","pow":false,"wallet":true},{"node":"http://node.lukaseder.de","port":"14265","pow":false,"wallet":true},{"node":"https://node.tangle.works","port":"443","pow":false,"wallet":true},{"node":"http://node05.iotatoken.nl","port":"16265","pow":false,"wallet":true},{"node":"http://iota.bitfinex.com","port":"80","pow":false,"wallet":true},{"node":"http://node04.iotatoken.nl","port":"14265","pow":false,"wallet":true},{"node":"http://node06.iotatoken.nl","port":"14265","pow":false,"wallet":true},{"node":"http://iotanode.party","port":"14265","tips":5356,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":54,"pow":false,"load":1,"health":10,"wallet":false},{"node":"http://node04.iotatoken.nl","port":"14265","tips":5097,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":5,"pow":true,"load":52,"health":10,"wallet":false},{"node":"http://node.lukaseder.de","port":"14265","tips":853,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":34,"pow":false,"load":11,"health":10,"wallet":false},{"node":"http://node02.iotatoken.nl","port":"14265","tips":3691,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":5,"pow":true,"load":20,"health":10,"wallet":false},{"node":"https://peanut.iotasalad.org","port":"14265","tips":5170,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":9,"pow":false,"load":145,"health":9,"wallet":false},{"node":"http://node03.iotatoken.nl","port":"14265","tips":5078,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":5,"pow":false,"load":98,"health":9,"wallet":false},{"node":"http://node01.iotatoken.nl","port":"14265","tips":5078,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":5,"pow":false,"load":98,"health":9,"wallet":false},{"node":"https://iotanode.us","port":"443","tips":5660,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":19,"pow":true,"load":246,"health":9,"wallet":false},{"node":"http://node05.iotatoken.nl","port":"16265","tips":5080,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":3,"pow":false,"load":87,"health":9,"wallet":false},{"node":"http://nodes.iota.fm","port":"80","tips":7784,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":16,"pow":true,"load":1018,"health":8,"wallet":false},{"node":"http://nelson1.iota.fm","port":"80","tips":7707,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":14,"pow":true,"load":1006,"health":8,"wallet":false},{"node":"http://iota-tangle.io","port":"14265","tips":7265,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":10,"pow":false,"load":699,"health":8,"wallet":false},{"node":"http://iota1.heidger.eu","port":"14265","tips":8079,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":20,"pow":false,"load":1073,"health":8,"wallet":false},{"node":"http://astra2261.startdedicated.net","port":"14265","tips":7851,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":8,"pow":true,"load":911,"health":8,"wallet":false},{"node":"https://beta.tangle-nodes.com","port":"443","tips":5646,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":10,"pow":false,"load":355,"health":8,"wallet":false},{"node":"https://alpha.tangle-nodes.com","port":"443","tips":5659,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":8,"pow":false,"load":354,"health":8,"wallet":false},{"node":"https://tuna.iotasalad.org","port":"14265","tips":7372,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":9,"pow":false,"load":623,"health":8,"wallet":false},{"node":"http://5.9.149.169","port":"14265","tips":6315,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":5,"pow":false,"load":700,"health":8,"wallet":false},{"node":"http://5.9.118.112","port":"14265","tips":6289,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":8,"pow":false,"load":556,"health":8,"wallet":false},{"node":"http://88.198.230.98","port":"14265","tips":6320,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":5,"pow":false,"load":663,"health":8,"wallet":false},{"node":"http://176.9.3.149","port":"14265","tips":6318,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":4,"pow":false,"load":691,"health":8,"wallet":false},{"node":"https://potato.iotasalad.org","port":"14265","tips":6924,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":8,"pow":false,"load":634,"health":8,"wallet":false},{"node":"https://durian.iotasalad.org","port":"14265","tips":6264,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":8,"pow":false,"load":597,"health":8,"wallet":false},{"node":"http://5.9.137.199","port":"14265","tips":6327,"version":"1.4.2.2","index":406042,"solid":406042,"neighbors":2,"pow":false,"load":896,"health":7,"wallet":false},{"node":"https://nodes.thetangle.org","port":"443","tips":5880,"version":"1.4.2.3","index":406042,"solid":406042,"neighbors":24,"pow":false,"load":249,"health":5,"wallet":false},{"node":"https://nodes.iota.cafe","port":"443","tips":5601,"version":"1.4.2.3","index":406042,"solid":406042,"neighbors":8,"pow":false,"load":154,"health":5,"wallet":false}]
+[
+    {
+        "node": "https://nodes.iota.cafe",
+        "port": "443",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "http://iotanode.farm",
+        "port": "14265",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "https://field.carriota.com",
+        "port": "443",
+        "pow": true,
+        "wallet": false
+    },
+    {
+        "node": "https://walletservice.iota.community",
+        "port": "443",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "http://eugene.iota.community",
+        "port": "14265",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "http://eugene.iotasupport.com",
+        "port": "14999",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "http://eugeneoldisoft.iotasupport.com",
+        "port": "14265",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "http://node01.iotatoken.nl",
+        "port": "14265",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "http://node02.iotatoken.nl",
+        "port": "14265",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "http://node03.iotatoken.nl",
+        "port": "15265",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "http://mainnet.necropaz.com",
+        "port": "14500",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "http://wallets.iotamexico.com",
+        "port": "80",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "http://5.9.137.199",
+        "port": "14265",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "http://5.9.118.112",
+        "port": "14265",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "http://5.9.149.169",
+        "port": "14265",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "http://88.198.230.98",
+        "port": "14265",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "http://176.9.3.149",
+        "port": "14265",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "https://n1.iota.nu",
+        "port": "443",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "http://node.lukaseder.de",
+        "port": "14265",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "https://node.tangle.works",
+        "port": "443",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "http://node05.iotatoken.nl",
+        "port": "16265",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "http://node04.iotatoken.nl",
+        "port": "14265",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "http://node06.iotatoken.nl",
+        "port": "14265",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "http://iota.bitfinex.com",
+        "port": "80",
+        "pow": false,
+        "wallet": true
+    },
+    {
+        "node": "https://node.iota-tangle.io",
+        "port": "14265",
+        "tips": 5870,
+        "version": "1.4.2.4",
+        "index": 453281,
+        "solid": 453281,
+        "neighbors": 9,
+        "pow": true,
+        "load": 0,
+        "health": 10,
+        "wallet": false
+    },
+    {
+        "node": "http://node.lukaseder.de",
+        "port": "14265",
+        "tips": 5825,
+        "version": "1.4.2.4",
+        "index": 453282,
+        "solid": 453282,
+        "neighbors": 34,
+        "pow": false,
+        "load": 2,
+        "health": 10,
+        "wallet": false
+    },
+    {
+        "node": "https://iotanode.us",
+        "port": "443",
+        "tips": 5999,
+        "version": "1.4.2.4",
+        "index": 453281,
+        "solid": 453280,
+        "neighbors": 20,
+        "pow": true,
+        "load": 1,
+        "health": 10,
+        "wallet": false
+    },
+    {
+        "node": "http://node01.iotatoken.nl",
+        "port": "14265",
+        "tips": 5807,
+        "version": "1.4.2.4",
+        "index": 453281,
+        "solid": 453281,
+        "neighbors": 7,
+        "pow": false,
+        "load": 0,
+        "health": 10,
+        "wallet": false
+    },
+    {
+        "node": "https://nodes.thetangle.org",
+        "port": "443",
+        "tips": 5893,
+        "version": "1.4.2.4",
+        "index": 453281,
+        "solid": 453281,
+        "neighbors": 24,
+        "pow": false,
+        "load": 0,
+        "health": 10,
+        "wallet": false
+    },
+    {
+        "node": "http://iotanode.party",
+        "port": "14265",
+        "tips": 5998,
+        "version": "1.4.2.4",
+        "index": 453281,
+        "solid": 453281,
+        "neighbors": 38,
+        "pow": false,
+        "load": 0,
+        "health": 10,
+        "wallet": false
+    },
+    {
+        "node": "https://nodes.iota.cafe",
+        "port": "443",
+        "tips": 5999,
+        "version": "1.4.2.4",
+        "index": 453281,
+        "solid": 453281,
+        "neighbors": 9,
+        "pow": false,
+        "load": 1,
+        "health": 10,
+        "wallet": false
+    },
+    {
+        "node": "http://176.9.3.149",
+        "port": "14265",
+        "tips": 5991,
+        "version": "1.4.2.4",
+        "index": 453281,
+        "solid": 453281,
+        "neighbors": 5,
+        "pow": false,
+        "load": 0,
+        "health": 10,
+        "wallet": false
+    },
+    {
+        "node": "http://88.198.230.98",
+        "port": "14265",
+        "tips": 6024,
+        "version": "1.4.2.4",
+        "index": 453281,
+        "solid": 453280,
+        "neighbors": 5,
+        "pow": false,
+        "load": 3,
+        "health": 10,
+        "wallet": false
+    },
+    {
+        "node": "http://node04.iotatoken.nl",
+        "port": "14265",
+        "tips": 5803,
+        "version": "1.4.2.4",
+        "index": 453281,
+        "solid": 453281,
+        "neighbors": 7,
+        "pow": true,
+        "load": 0,
+        "health": 10,
+        "wallet": false
+    },
+    {
+        "node": "http://node03.iotatoken.nl",
+        "port": "14265",
+        "tips": 5807,
+        "version": "1.4.2.4",
+        "index": 453281,
+        "solid": 453281,
+        "neighbors": 7,
+        "pow": false,
+        "load": 0,
+        "health": 10,
+        "wallet": false
+    },
+    {
+        "node": "http://node02.iotatoken.nl",
+        "port": "14265",
+        "tips": 5535,
+        "version": "1.4.2.4",
+        "index": 453281,
+        "solid": 453281,
+        "neighbors": 5,
+        "pow": true,
+        "load": 0,
+        "health": 10,
+        "wallet": false
+    },
+    {
+        "node": "http://node05.iotatoken.nl",
+        "port": "16265",
+        "tips": 5844,
+        "version": "1.4.2.4",
+        "index": 453281,
+        "solid": 453281,
+        "neighbors": 5,
+        "pow": false,
+        "load": 0,
+        "health": 10,
+        "wallet": false
+    },
+    {
+        "node": "http://5.9.137.199",
+        "port": "14265",
+        "tips": 6009,
+        "version": "1.4.2.4",
+        "index": 453281,
+        "solid": 453281,
+        "neighbors": 5,
+        "pow": false,
+        "load": 0,
+        "health": 10,
+        "wallet": false
+    },
+    {
+        "node": "http://5.9.149.169",
+        "port": "14265",
+        "tips": 6029,
+        "version": "1.4.2.4",
+        "index": 453281,
+        "solid": 453280,
+        "neighbors": 5,
+        "pow": false,
+        "load": 0,
+        "health": 10,
+        "wallet": false
+    },
+    {
+        "node": "http://5.9.118.112",
+        "port": "14265",
+        "tips": 5977,
+        "version": "1.4.2.4",
+        "index": 453281,
+        "solid": 453281,
+        "neighbors": 7,
+        "pow": false,
+        "load": 0,
+        "health": 10,
+        "wallet": false
+    },
+    {
+        "node": "http://nelson1.iota.fm",
+        "port": "80",
+        "tips": 5860,
+        "version": "1.4.2.4_RC",
+        "index": 453281,
+        "solid": 453281,
+        "neighbors": 14,
+        "pow": true,
+        "load": 0,
+        "health": 6,
+        "wallet": false
+    },
+    {
+        "node": "https://peanut.iotasalad.org",
+        "port": "14265",
+        "tips": 5897,
+        "version": "1.4.2.4_RC",
+        "index": 453281,
+        "solid": 453281,
+        "neighbors": 9,
+        "pow": false,
+        "load": 1,
+        "health": 6,
+        "wallet": false
+    },
+    {
+        "node": "https://durian.iotasalad.org",
+        "port": "14265",
+        "tips": 5856,
+        "version": "1.4.2.4_RC",
+        "index": 453281,
+        "solid": 453281,
+        "neighbors": 10,
+        "pow": false,
+        "load": 0,
+        "health": 6,
+        "wallet": false
+    },
+    {
+        "node": "https://potato.iotasalad.org",
+        "port": "14265",
+        "tips": 5853,
+        "version": "1.4.2.4_RC",
+        "index": 453281,
+        "solid": 453281,
+        "neighbors": 15,
+        "pow": false,
+        "load": 0,
+        "health": 6,
+        "wallet": false
+    },
+    {
+        "node": "http://nodes.iota.fm",
+        "port": "80",
+        "tips": 5871,
+        "version": "1.4.2.4_RC",
+        "index": 453281,
+        "solid": 453281,
+        "neighbors": 11,
+        "pow": true,
+        "load": 0,
+        "health": 6,
+        "wallet": false
+    },
+    {
+        "node": "https://tuna.iotasalad.org",
+        "port": "14265",
+        "tips": 5859,
+        "version": "1.4.2.4_RC",
+        "index": 453281,
+        "solid": 453281,
+        "neighbors": 9,
+        "pow": false,
+        "load": 0,
+        "health": 6,
+        "wallet": false
+    },
+    {
+        "node": "http://astra2261.startdedicated.net",
+        "port": "14265",
+        "tips": 5851,
+        "version": "1.4.2.4",
+        "index": 453281,
+        "solid": 426550,
+        "neighbors": 7,
+        "pow": true,
+        "load": 0,
+        "health": 6,
+        "wallet": false
+    }
+]
